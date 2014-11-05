@@ -6,7 +6,7 @@ from .forms import LoginForm
 @app.route('/index')
 def index():
     """index route"""
-    user = { 'nickname' : 'miguel'}
+    user = { 'nickname' : 'joel'}
     posts = [  # fake array of posts
         {
             'author': {'nickname': 'John'},
