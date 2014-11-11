@@ -40,7 +40,7 @@ http = credentials.authorize(http)
 # the Google Developers Console
 # to get a developerKey for your own application.
 service = build(serviceName='calendar', version='v3', http=http,
-       developerKey='YOUR_DEVELOPER_KEY')
+       developerKey='AIzaSyCaPl3WctXkNV5fdMteZOQOu6eglY1LluI')
 
 
 event = {
