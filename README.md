@@ -10,7 +10,7 @@ With that in mind. . .
 
 **TODO**
 
-- [ ] Acquire dev key for Evernote
-- [ ] Write some API requests to get familiar
+- [X] Acquire dev key for Evernote
+- [X] Write some API requests to get familiar
 - [ ] Move Franklin off of /index
 - [ ] Actually build it
