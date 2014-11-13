@@ -40,6 +40,11 @@ def login():
             form=form,
             providers=app.config['OPENID_PROVIDERS'])
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
 @app.before_request
 def before_request():
     g.user = current_user
