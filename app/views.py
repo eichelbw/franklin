@@ -39,6 +39,10 @@ def login():
             form=form,
             providers=app.config['OPENID_PROVIDERS'])
 
+@app.before_request
+def before_request():
+    g.user = current_user
+
 @lm.user_loader
 def load_user(id):
     """loads a user from the db by id"""
@@ -64,3 +68,4 @@ def after_login(resp):
         session.pop('remember_me', None)
     login_user(user, remember = remember_me)
     return redirect(request.args.get('next') or url_for('index'))
+
