@@ -6,3 +6,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 
 from app import views, models
+
+lm = LoginManager()
+lm.init_app(app)
+lm.login_view = 'login'
