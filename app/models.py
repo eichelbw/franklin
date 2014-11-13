@@ -6,7 +6,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
-    def is_authenticarted(self):
+    def is_authenticated(self):
         """returns false if user is not allowed to authenticate"""
         return True # pass for now
 
