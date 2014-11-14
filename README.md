@@ -12,5 +12,6 @@ With that in mind. . .
 
 - [X] Acquire dev key for Evernote
 - [X] Write some API requests to get familiar
+- [ ] Finish the microblog tutorial
 - [ ] Move Franklin off of /index
 - [ ] Actually build it
