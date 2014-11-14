@@ -1,4 +1,5 @@
 from app import db
+from hashlib import md5
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +24,10 @@ class User(db.Model):
             return unicode(self.id) # python 2
         except NameError:
             return str(self.id) # python 3
+
+    def avatar(self, size):
+        """grabs the user's gravatar"""
+        return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""
