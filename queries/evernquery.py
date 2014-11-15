@@ -12,7 +12,7 @@ notebooks = noteStore.listNotebooks()
 for n in notebooks:
     print n.name
 
-note = Types.Note()
-note.title = "test note"
-note.content = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>Hello world!</en-note>'
-note = noteStore.createNote(note)
+#note = Types.Note()
+#note.title = "test note"
+#note.content = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>Hello world!</en-note>'
+#note = noteStore.createNote(note)
