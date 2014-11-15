@@ -5,3 +5,8 @@ client = EvernoteClient(token=dev_token, sandbox=False)
 userStore = client.get_user_store()
 user = userStore.getUser()
 print user.username
+
+noteStore = client.get_note_store()
+notebooks = noteStore.listNotebooks()
+for n in notebooks:
+    print n.name

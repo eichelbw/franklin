@@ -2,3 +2,4 @@
 **.db
 db_repository/versions
 tmp/
+venv/
