@@ -1,5 +1,6 @@
 from app import db
 from hashlib import md5
+import queries.evernquery
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,6 +28,10 @@ class User(db.Model):
     def avatar(self, size):
         """grabs the user's gravatar"""
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
+
+    def get_todo_c(self):
+        """call queries/evernquery.get_todo_content"""
+        return get_todo_content()
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""

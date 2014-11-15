@@ -62,6 +62,13 @@ def user(nickname):
             user=user,
             posts=posts)
 
+@app.route('/todos')
+def todos():
+    user = g.user
+    return render_template('todos.html',
+            user=user
+            )
+
 @app.before_request
 def before_request():
     g.user = current_user
