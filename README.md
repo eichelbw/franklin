@@ -12,7 +12,7 @@ With that in mind. . .
 
 - [X] Acquire dev key for Evernote
 - [X] Write some API requests to get familiar
-- [ ] Get previously created todo note from Evernote
+- [X] Get previously created todo note from Evernote
 - [ ] Display todo status from note
 - [ ] Allow user to finish a todo and communicate this to EN
 - [ ] Finish the microblog tutorial

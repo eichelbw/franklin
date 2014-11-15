@@ -18,8 +18,10 @@ offset, max_notes = 0, 1
 result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
 result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
 todo_note_guid = result_list.notes[0].guid
+print str(todo_note_guid)
 
-print todo_note_guid
+todo_content = note_store.getNote(dev_token, str(todo_note_guid), True, False, False, False)
+print todo_content
 
 #note = Types.Note()
 #note.title = "test note"
