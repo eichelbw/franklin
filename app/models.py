@@ -34,7 +34,6 @@ class User(db.Model):
         """call queries/evernquery.get_todo_content"""
         soup = BeautifulSoup(evernquery.get_todo_content())
         all_divs = soup.findAll("div")
-        div_children = [child.contents[0] for child in all_divs]
         all_todos = []
         for div in all_divs:
             if div.contents[0].name == "en-todo":
