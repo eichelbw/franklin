@@ -1,6 +1,7 @@
 from app import db
 from hashlib import md5
 import app.queries.evernquery as evernquery
+from bs4 import BeautifulSoup
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,7 +32,15 @@ class User(db.Model):
 
     def get_todo_c(self):
         """call queries/evernquery.get_todo_content"""
-        return evernquery.get_todo_content()
+        soup = BeautifulSoup(evernquery.get_todo_content())
+        all_divs = soup.findAll("div")
+        div_children = [child.contents[0] for child in all_divs]
+        all_todos = []
+        for div in all_divs:
+            if div.contents[0].name == "en-todo":
+                all_todos.append(div)
+        
+        return all_todos
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""
