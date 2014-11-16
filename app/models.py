@@ -1,6 +1,6 @@
 from app import db
 from hashlib import md5
-import app.queries.evernquery
+import app.queries.evernquery as evernquery
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -66,6 +66,7 @@ def user(nickname):
 def todos():
     user = g.user
     return render_template('todos.html',
+            title="TODO",
             user=user
             )
 
