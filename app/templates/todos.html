@@ -2,6 +2,6 @@
 
 {% block content %}
   <div>
-    {{ user.get_todo_c() }}
+    {{ user.get_todo_c()|safe  }}
   </div>
 {% endblock %}
