@@ -6,6 +6,10 @@ WIP
 
 Okay so once this is over, the plan is to build a todo application (a la [TodoMVC](todomvc.com)) except that I'd like to pull tasks from the [Evernote](https://dev.evernote.com/doc/start/python.php) and [Google Calendar](https://developers.google.com/google-apps/calendar/firstapp) APIs.
 
+**EDIT**
+
+Have begun persuing the todo aspect of this project more than the Flask side of things. As such, _microblog_ progress is on hold.
+
 With that in mind. . .
 
 **TODO**
@@ -13,8 +17,10 @@ With that in mind. . .
 - [X] Acquire dev key for Evernote
 - [X] Write some API requests to get familiar
 - [X] Get previously created todo note from Evernote
-- [ ] Display todo status from note
-- [ ] Allow user to finish a todo and communicate this to EN
+- [X] Display contents of todo note
+- [ ] Format todo contents as html
+- [ ] Allow user to interact with a todo (using javascript, probably)
+- [ ] Sync todo status to EN
+- [ ] Do all that with Google calander
 - [ ] Finish the microblog tutorial
 - [ ] Move Franklin off of /index
-- [ ] Actually build it
