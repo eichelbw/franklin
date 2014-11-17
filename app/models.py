@@ -32,7 +32,7 @@ class User(db.Model):
 
     def get_todo_content(self):
         """call queries/evernquery.get_todo_notes. return a list of all divs that contain en-todo tags along with their 'checked' status"""
-        soup = BeautifulSoup(evernquery.get_todo_notes())
+        soup = BeautifulSoup(evernquery.get_todo_notes().content)
         all_divs = soup.findAll("div")
         all_todos = []
         for div in all_divs:
