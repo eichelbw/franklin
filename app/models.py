@@ -36,11 +36,8 @@ class User(db.Model):
         all_divs = soup.findAll("div")
         all_todos = []
         for div in all_divs:
-            if div.contents[0].name == "en-todo" and 'checked' in div.contents[0].attrs:
-                all_todos.append([div, True])
-                #all_todos.append(div.contents[0])
-            elif div.contents[0].name == "en-todo" and 'checked' not in div.contents[0].attrs:
-                all_todos.append([div, False])
+            if div.contents[0].name == "en-todo":
+                all_todos.append([div, 'checked' in div.contents[0].attrs])
         return all_todos
 
     def __repr__(self):
