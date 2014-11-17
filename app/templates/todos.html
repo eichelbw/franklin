@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div>
-    {{ user.get_todo_c()|safe }}
-  </div>
+  {% for todo in user.get_todo_c() %}
+    <input type="checkbox" {{ 'checked' if todo[1] }}/>: {{ todo[0] }}
+  {% endfor %}
 {% endblock %}
