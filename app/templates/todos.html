@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  {% for todo in user.get_todo_c() %}
-    <input type="checkbox" id="todocheckbox" {{ 'checked' if todo[1] }}/>: {{ todo[0] }}
+  {% for todo in user.get_todo_content() %}
+    <input type="checkbox" id="todocheckbox" {{ 'checked="checked"' if todo[1] }}/>: {{ todo[0] }}
   {% endfor %}
 {% endblock %}

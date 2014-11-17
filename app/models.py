@@ -30,9 +30,9 @@ class User(db.Model):
         """grabs the user's gravatar"""
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
-    def get_todo_c(self):
-        """call queries/evernquery.get_todo_content"""
-        soup = BeautifulSoup(evernquery.get_todo_content())
+    def get_todo_content(self):
+        """call queries/evernquery.get_todo_notes. return a list of all divs that contain en-todo tags along with their 'checked' status"""
+        soup = BeautifulSoup(evernquery.get_todo_notes())
         all_divs = soup.findAll("div")
         all_todos = []
         for div in all_divs:
