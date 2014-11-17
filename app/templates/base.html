@@ -5,10 +5,22 @@
     {% else %}
     <title>Welcome to franklin!</title>
     {% endif %}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(function() {
+          $("input#todocheckbox").click(function() {
+            if ($(this).attr("checked")) {
+              $(this).removeAttr("checked")
+            } else {
+              $(this).attr("checked","checked")
+            }
+          })
+        });
+    </script>
   </head>
   <body>
     <div>
-      Franklin: 
+      Franklin:
       <a href="{{ url_for('index') }}">Home </a>
       {% if g.user.is_authenticated() %}
       | <a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a>

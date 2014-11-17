@@ -2,6 +2,6 @@
 
 {% block content %}
   {% for todo in user.get_todo_c() %}
-    <input type="checkbox" {{ 'checked' if todo[1] }}/>: {{ todo[0] }}
+    <input type="checkbox" id="todocheckbox" {{ 'checked' if todo[1] }}/>: {{ todo[0] }}
   {% endfor %}
 {% endblock %}
