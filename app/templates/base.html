@@ -11,17 +11,17 @@
           $("input#todocheckbox").click(function() {
             if ($(this).attr("checked")) {
               $(this).removeAttr("checked");
-              console.log($(this).children());
+              console.log($(this).siblings());
             } else {
               $(this).attr("checked","checked");
-              console.log($(this).children());
+              console.log($(this).siblings());
             }
           })
         });
     </script>
   </head>
   <body>
-    <div>
+    <div id='nav'>
       Franklin:
       <a href="{{ url_for('index') }}">Home </a>
       | <a href="{{ url_for('todos') }}">Todos</a>

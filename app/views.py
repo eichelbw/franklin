@@ -70,6 +70,11 @@ def todos():
             user=user
             )
 
+@app.route('/sync', methods=['POST'])
+def sync():
+    """called when user wishes to sync their changes. placeholder for now."""
+    return True
+
 @app.before_request
 def before_request():
     g.user = current_user
