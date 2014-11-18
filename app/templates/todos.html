@@ -4,4 +4,6 @@
   {% for todo in user.get_todo_content() %}
     <input type="checkbox" id="todocheckbox" {{ 'checked' if todo[1] }}/>: {{ todo[0] }}
   {% endfor %}
+  <br/>
+  <input type="button" id="syncbutton">Sync
 {% endblock %}

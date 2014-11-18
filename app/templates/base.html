@@ -11,8 +11,10 @@
           $("input#todocheckbox").click(function() {
             if ($(this).attr("checked")) {
               $(this).removeAttr("checked");
+              console.log($(this).children());
             } else {
               $(this).attr("checked","checked");
+              console.log($(this).children());
             }
           })
         });
