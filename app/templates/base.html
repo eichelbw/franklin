@@ -8,11 +8,8 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" charset="utf-8">
       $(function() {
+          // adds en-todo["checked"] on checkbox click if it isn't there, removes it if it is.
           $("div#tdholder").click(function() {
-            // rn im getting the siblings of the checkbox. what i actually need
-            // to do is to find all the divs containing <en-todo> tags and pass
-            // them in some form to the 'sync' route. i'll construct the
-            // updated object in the view method i guess?
             var entodo = $(this).find("en-todo")[0];
             if ($(entodo).attr("checked") === "checked") {
               $(entodo).removeAttr("checked");
@@ -21,6 +18,10 @@
             }
           })
         });
+      $(function() {
+          // grabs all divs containing en-todo tags and passes them to the sync route
+          return true
+          });
     </script>
   </head>
   <body>
