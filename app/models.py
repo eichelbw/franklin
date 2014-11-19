@@ -40,8 +40,8 @@ class User(db.Model):
                 div['id'] = 'tdcontent'
                 try:
                     if div.contents[0]['checked'] == 'true':
-                        div.contents[0]['checked'] = 'checked'
-                except KeyError:
+                        div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
+                except KeyError: # en-todo is not checked. pass on to jquery as is
                     pass
                 all_todos.append([div, 'checked' in div.contents[0].attrs])
         return all_todos

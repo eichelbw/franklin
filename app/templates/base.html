@@ -8,14 +8,17 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript" charset="utf-8">
       $(function() {
-          $("div.tdholder").click(function() {
+          $("div#tdholder").click(function() {
             // rn im getting the siblings of the checkbox. what i actually need
             // to do is to find all the divs containing <en-todo> tags and pass
             // them in some form to the 'sync' route. i'll construct the
             // updated object in the view method i guess?
-            var td = $(this).find("en-todo")[0];
-            $(td).attr("checked", true)
-            console.log($(td).is(":checked"))
+            var entodo = $(this).find("en-todo")[0];
+            if ($(entodo).attr("checked") === "checked") {
+              $(entodo).removeAttr("checked");
+            } else {
+              $(entodo).attr("checked", true);
+            }
           })
         });
     </script>
