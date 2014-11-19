@@ -37,6 +37,12 @@ class User(db.Model):
         all_todos = []
         for div in all_divs:
             if div.contents[0].name == "en-todo":
+                div['id'] = 'tdcontent'
+                try:
+                    if div.contents[0]['checked'] == 'true':
+                        div.contents[0]['checked'] = 'checked'
+                except KeyError:
+                    pass
                 all_todos.append([div, 'checked' in div.contents[0].attrs])
         return all_todos
 
