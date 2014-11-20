@@ -19,15 +19,13 @@
           })
         });
       $(function() {
-          // grabs all divs containing en-todo tags and passes them to the sync route
+          // grabs div containing all divs with en-todo's, which will get picked out in the view
             $("input#syncbutton").on('click', function() {
-              // var updates = $("div#tdcontent");
-              var updates = "a string";
+              var updates = $(this).parents().html();
               $.ajax({ type: "POST",
                        url: "/sync",
-                       data: updates
+                       data: JSON.stringify(updates)
               });
-              console.log("test")
             })
           });
     </script>

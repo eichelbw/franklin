@@ -1,6 +1,8 @@
 from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, login_required
+import json
 from app import app, db, lm, oid
+from bs4 import BeautifulSoup
 from forms import LoginForm
 from models import User
 from datetime import datetime
@@ -72,8 +74,11 @@ def todos():
 
 @app.route('/sync', methods=['POST'])
 def sync():
-    """called when user wishes to sync their changes. placeholder for now."""
-    print request.data
+    """finds all en-todos on the page"""
+    req = BeautifulSoup(request.get_data().decode("string-escape"))
+    todo_divs = req.findAll("div", {"id": "tdcontent"})
+    updates = unicode.join(u'\n', map(unicode, todo_divs))
+    # evernquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 
 @app.before_request
