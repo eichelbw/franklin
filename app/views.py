@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
 from forms import LoginForm
@@ -73,7 +73,8 @@ def todos():
 @app.route('/sync', methods=['POST'])
 def sync():
     """called when user wishes to sync their changes. placeholder for now."""
-    return True
+    print request.data
+    return jsonify(result={"status": 200})
 
 @app.before_request
 def before_request():

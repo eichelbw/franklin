@@ -21,12 +21,14 @@
       $(function() {
           // grabs all divs containing en-todo tags and passes them to the sync route
             $("input#syncbutton").on('click', function() {
-              var updates = $("div#tdcontent")
+              // var updates = $("div#tdcontent");
+              var updates = "a string";
               $.ajax({ type: "POST",
                        url: "/sync",
                        data: updates
               });
-            });
+              console.log("test")
+            })
           });
     </script>
   </head>
