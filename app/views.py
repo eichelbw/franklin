@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 import json
 from app import app, db, lm, oid
+import app.queries.evernquery as evernquery
 from bs4 import BeautifulSoup
 from forms import LoginForm
 from models import User
@@ -77,8 +78,17 @@ def sync():
     """finds all en-todos on the page"""
     req = BeautifulSoup(request.get_data().decode("string-escape"))
     todo_divs = req.findAll("div", {"id": "tdcontent"})
+    for div in todo_divs:
+        if div['id'] == 'tdcontent':
+            del(div['id'])
+        for child in div.children:
+            try:
+                if child["checked"] == "checked":
+                    child["checked"] = "true"
+            except:
+                pass
     updates = unicode.join(u'\n', map(unicode, todo_divs))
-    # evernquery.post_todo_updates(updates)
+    evernquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 
 @app.before_request

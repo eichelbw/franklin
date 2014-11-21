@@ -3,6 +3,17 @@ from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 import evernote.edam.type.ttypes as Types
 from evernote.edam.type.ttypes import NoteSortOrder
 
+##########
+## TODO ##
+##########
+
+# right now there's only one note that holds todos, so there's not real need for
+# a new class. once i get sync working both ways for a singe note, though, it'll
+# make sense to search for multiple notes tagged todo (and likely arrange them
+# in the html by note title). in that case, i'll affix these methods to a class
+# and instantiate an object of this class for each note that's tagged. at least
+# that's how i'm thinking of it now
+
 dev_token = "S=s385:U=3e7d2ff:E=150f8d4c12f:C=149a12394c0:P=1cd:A=en-devtoken:V=2:H=44734894e812cbfe03d83cc365d8c9c5"
 client = EvernoteClient(token=dev_token, sandbox=False)
 note_store = client.get_note_store() # Evernote's Note Store object is the access point to all note-related information
@@ -13,23 +24,31 @@ note_filter = NoteFilter() # the notefilter object allows us to define filters f
 note_filter.tagGuids = [todo_guid] # find note with todo guid (ie, the todo note)
 offset, max_notes = 0, 1
 result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
+result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
+todo_note_guid = result_list.notes[0].guid
 
 # TODO increase max_notes and display todos from the same note together. probably change get_todo_notes()
 #      to return a dictionary with keys being note.title and values being en-todos
 
 def get_todo_notes():
     """executes EN api query and returns content of note tagged 'todo'"""
-    result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
-    todo_note_guid = result_list.notes[0].guid
     return note_store.getNote(dev_token, str(todo_note_guid), True, False, False, False)
 
-def set_todo_content(updated_note):
-    """updates EN api with modifications to updated_note"""
+def post_todo_updates(updates):
+    """updates EN api with modifications to the note"""
     # updateNote() needs three things:
     # 1) todo note's guid
     # 2) todo note's title
     # 3) todo note's full content with change.
     # ---
+    HEADER = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">\n<en-note>'
+    TAIL = '</en-note>'
+    tdn = get_todo_notes()
+    upnote = Types.Note()
+    upnote.title, upnote.guid = tdn.title, tdn.guid
+    upnote.content = HEADER + updates + TAIL
+    # print upnote.content
+    note_store.updateNote(upnote)
     # things in the way currently:
     # 1) not sure if i should create an object in this method to pass to updateNote and assign attributes
     #    directly from the earlier note from get_todo_notes() or to update previous object in jquery and
