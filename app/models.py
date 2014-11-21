@@ -31,10 +31,12 @@ class User(db.Model):
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def get_todo_content(self):
-        """call queries/evernquery.get_todo_notes. return a list of all divs that contain en-todo tags along with their 'checked' status"""
+        """call queries/evernquery.get_todo_notes. return a list of all divs
+        that contain en-todo tags along with their 'checked' status. seperate
+        text not associated with en-todo tags and pass that along as well."""
         soup = BeautifulSoup(evernquery.get_todo_notes().content)
         all_divs = soup.findAll("div")
-        all_todos = []
+        out_divs = []
         for div in all_divs:
             if div.contents[0].name == "en-todo":
                 div['id'] = 'tdcontent'
@@ -43,8 +45,11 @@ class User(db.Model):
                         div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
                 except KeyError: # en-todo is not checked. pass on to jquery as is
                     pass
-                all_todos.append([div, 'checked' in div.contents[0].attrs])
-        return all_todos
+                out_divs.append([div, 'checked' in div.contents[0].attrs])
+            else:
+                div['id'] = 'tdheader'
+                out_divs.append([div, "something's wrong if this gets touched"])
+        return out_divs
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""
