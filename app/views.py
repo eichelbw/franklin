@@ -77,17 +77,26 @@ def todos():
 def sync():
     """finds all en-todos on the page"""
     req = BeautifulSoup(request.get_data().decode("string-escape"))
-    todo_divs = req.findAll("div", {"id": "tdcontent"})
-    for div in todo_divs:
+    all_divs = req.findAll("div")
+    update_divs = []
+    for div in all_divs:
         if div['id'] == 'tdcontent':
             del(div['id'])
-        for child in div.children:
-            try:
-                if child["checked"] == "checked":
-                    child["checked"] = "true"
-            except:
-                pass
-    updates = unicode.join(u'\n', map(unicode, todo_divs))
+            for child in div.children:
+                try:
+                    if child["checked"] == "checked":
+                        child["checked"] = "true"
+                except:
+                    pass
+            update_divs.append(div)
+        elif div['id'] == "tdheader":
+            del(div['id'])
+            update_divs.append(div)
+        elif div['id'] == 'nav' or div['id'] == 'tdholder':
+            pass
+        else:
+            print "something's gone wrong in the sync route"
+    updates = unicode.join(u'\n', map(unicode, update_divs))
     evernquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 

@@ -10,7 +10,7 @@ Okay so once this is over, the plan is to build a todo application (a la [TodoMV
 
 Have begun persuing the todo aspect of this project more than the Flask side of things. As such, _microblog_ progress is on hold.
 
-Presently, sync works both ways for Evernote todos. The problem on the EN side of things is that the app will delete any text in the note that isn't associated with a check box. This has obvious drawbacks.
+Presently, sync works both ways for Evernote todos.
 
 The next thing to do on the EN side is to allow for the user to have multiple notes tagged todo. Todos with the same note should be displayed under a header of the note title.
 
@@ -25,7 +25,7 @@ With that in mind. . .
 - [X] Format todo contents as html
 - [X] Allow user to interact with a todo (using javascript, probably)
 - [X] Sync todo status to EN
-- [ ] Allow non-todo related divs to persist through syncs
+- [X] Allow non-todo related divs to persist through syncs
 - [ ] Allow for multiple notes tagged todo
 - [ ] Do all that with Google calander
 - [ ] Finish the microblog tutorial
