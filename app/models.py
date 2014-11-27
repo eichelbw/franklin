@@ -34,9 +34,20 @@ class User(db.Model):
         """call queries/evernquery.get_todo_notes. return a list of all divs
         that contain en-todo tags along with their 'checked' status. seperate
         text not associated with en-todo tags and pass that along as well."""
-        soup = BeautifulSoup(evernquery.get_todo_notes().content)
-        all_divs = soup.findAll("div")
+        query_response = evernquery.get_todo_notes()
         out_divs = []
+        for note in query_response:
+            out_divs.append(self.munge_note(note))
+        return out_divs
+
+    def munge_note(self, note):
+        """takes a note and return a list of all divs that contain en-todo tags
+        along w their 'checked' status. separate text not associated w en-todo
+        tags and pass that as long as well."""
+        soup = BeautifulSoup(note.content)
+        todo_title = note.title
+        all_divs = soup.findAll("div")
+        relavent_divs = []
         for div in all_divs:
             if div.contents[0].name == "en-todo":
                 div['id'] = 'tdcontent'
@@ -45,11 +56,12 @@ class User(db.Model):
                         div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
                 except KeyError: # en-todo is not checked. pass on to jquery as is
                     pass
-                out_divs.append([div, 'checked' in div.contents[0].attrs])
+                relavent_divs.append([div, 'checked' in div.contents[0].attrs])
             else:
                 div['id'] = 'tdheader'
-                out_divs.append([div, "something's wrong if this gets touched"])
-        return out_divs
+                relavent_divs.append([div, "something's wrong if this gets touched"])
+        print relavent_divs
+        return relavent_divs
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""
