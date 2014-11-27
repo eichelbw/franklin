@@ -50,17 +50,23 @@ class User(db.Model):
         all_divs = soup.findAll("div")
         relevant_divs = []
         for div in all_divs:
-            if div.contents[0].name == "en-todo":
-                div['id'] = 'tdcontent'
-                try:
-                    if div.contents[0]['checked'] == 'true':
-                        div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
-                except KeyError: # en-todo is not checked. pass on to jquery as is
-                    pass
-                relevant_divs.append([div, 'checked' in div.contents[0].attrs])
-            else:
-                div['id'] = 'tdheader'
-                relevant_divs.append([div, "something's wrong if this gets touched"])
+            self.div_decision_tree(div, relevant_divs)
+        return relevant_divs
+
+    def div_decision_tree(self, div, relevant_divs):
+        """formats div with info based on id as it comes from EN. returns
+        div formatted for to pass to franklin front end."""
+        if div.contents[0].name == "en-todo":
+            div['id'] = 'tdcontent'
+            try:
+                if div.contents[0]['checked'] == 'true':
+                    div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
+            except KeyError: # en-todo is not checked. pass on to jquery as is
+                pass
+            relevant_divs.append([div, 'checked' in div.contents[0].attrs])
+        else:
+            div['id'] = 'tdheader'
+            relevant_divs.append([div, "something's wrong if this gets touched"])
         return relevant_divs
 
     def __repr__(self):
