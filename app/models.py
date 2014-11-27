@@ -35,9 +35,10 @@ class User(db.Model):
         that contain en-todo tags along with their 'checked' status. seperate
         text not associated with en-todo tags and pass that along as well."""
         query_response = evernquery.get_todo_notes()
-        out_divs = []
+        out_divs = dict()
         for note in query_response:
-            out_divs.append(self.munge_note(note))
+            out_divs[str(note.title)] = self.munge_note(note)
+        print out_divs
         return out_divs
 
     def munge_note(self, note):
@@ -47,7 +48,7 @@ class User(db.Model):
         soup = BeautifulSoup(note.content)
         todo_title = note.title
         all_divs = soup.findAll("div")
-        relavent_divs = []
+        relevant_divs = []
         for div in all_divs:
             if div.contents[0].name == "en-todo":
                 div['id'] = 'tdcontent'
@@ -56,12 +57,11 @@ class User(db.Model):
                         div.contents[0]['checked'] = 'checked' # change "checked" attr to jquery-compatible
                 except KeyError: # en-todo is not checked. pass on to jquery as is
                     pass
-                relavent_divs.append([div, 'checked' in div.contents[0].attrs])
+                relevant_divs.append([div, 'checked' in div.contents[0].attrs])
             else:
                 div['id'] = 'tdheader'
-                relavent_divs.append([div, "something's wrong if this gets touched"])
-        print relavent_divs
-        return relavent_divs
+                relevant_divs.append([div, "something's wrong if this gets touched"])
+        return relevant_divs
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""

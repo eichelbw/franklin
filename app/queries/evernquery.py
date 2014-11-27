@@ -22,7 +22,7 @@ todo_guid = [tag for tag in all_tags if tag.name == "todo"][0].guid # compare al
 
 note_filter = NoteFilter() # the notefilter object allows us to define filters for our eventual findNotesMetadata call
 note_filter.tagGuids = [todo_guid] # find note with todo guid (ie, the todo note)
-offset, max_notes = 0, 2
+offset, max_notes = 0, 10
 result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
 result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
 #todo_note_guid = result_list.notes[0].guid
