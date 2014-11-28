@@ -38,7 +38,6 @@ class User(db.Model):
         out_divs = dict()
         for note in query_response:
             out_divs[str(note.title)] = self.munge_note(note)
-        print out_divs
         return out_divs
 
     def munge_note(self, note):
@@ -51,6 +50,7 @@ class User(db.Model):
         relevant_divs = []
         for div in all_divs:
             self.div_decision_tree(div, relevant_divs)
+        print relevant_divs
         return relevant_divs
 
     def div_decision_tree(self, div, relevant_divs):

@@ -2,14 +2,17 @@
 
 {% block content %}
   <div>
-    {% for todo in user.get_todo_content() %}
-      {% if todo[0]["id"] == "tdcontent" %}
-        <div id="tdholder">
-          <input type="checkbox" id="todocheckbox" {{ 'checked' if todo[1] }}/>: {{ todo[0]|safe }}
-        </div>
-      {% else %}
-        {{ todo[0]|safe }}
-      {% endif %}
+    {% for header, todo in user.get_todo_content().iteritems() %}
+      <h1>{{ header|safe }}</h1>
+      {% for div in todo %}
+        {% if div[0]["id"] == "tdcontent" %}
+          <div id="tdholder">
+            <input type="checkbox" id="todocheckbox" {{ 'checked' if div[1] }}/>: {{ div[0]|safe }}
+          </div>
+        {% else %}
+          {{ div[0]|safe }}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
     <br/>
     <input type="button" id="syncbutton">Sync
