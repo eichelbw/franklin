@@ -3,7 +3,7 @@
 {% block content %}
   <div>
     {% for header, todo in user.get_todo_content().iteritems() %}
-      <h1>{{ header|safe }}</h1>
+      <h1 id="todoheader">{{ header|safe }}</h1>
       {% for div in todo %}
         {% if div[0]["id"] == "tdcontent" %}
           <div id="tdholder">
