@@ -50,7 +50,6 @@ class User(db.Model):
         relevant_divs = []
         for div in all_divs:
             self.div_decision_tree(div, relevant_divs)
-        print relevant_divs
         return relevant_divs
 
     def div_decision_tree(self, div, relevant_divs):
