@@ -14,6 +14,8 @@ def split_request(curr):
             if curr.name == "h1": # reached the end of the current group o divs
                 return
             elif curr.name == "div": # gets rid of br and None tag names
+                # yield curr.find("div") if curr.find("div") != "None" else curr
+                # yields div children if they exist, otherwise yields div
                 yield curr
         except AttributeError: # end of document
             break
@@ -22,6 +24,7 @@ def split_request(curr):
 def format_divs_for_EN(batch):
     """translates tags from frontend style to EN style. housekeeping."""
     update_divs = []
+    print batch
     for div in batch:
         if div['id'] == 'tdcontent':
             print "1"
@@ -41,5 +44,5 @@ def format_divs_for_EN(batch):
             print "3"
             pass
         else:
-            print "something's gone wrong in the sync route"
+            print "unexpected div id encountered when reformatting for EN"
     # print unicode.join(u'\n', map(unicode, update_divs))

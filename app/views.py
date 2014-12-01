@@ -82,7 +82,6 @@ def sync():
         if tag.name == "h1":
             current = tag
             update_batch = list(view.split_request(current))
-            print update_batch
             view.format_divs_for_EN(update_batch)
     # all_divs = req.findAll("div")
     # update_divs = []
