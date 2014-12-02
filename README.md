@@ -12,8 +12,6 @@ Have begun persuing the todo aspect of this project more than the Flask side of 
 
 Presently, sync works both ways for Evernote todos.
 
-The next thing to do on the EN side is to allow for the user to have multiple notes tagged todo. Todos with the same note should be displayed under a header of the note title.
-
 With that in mind. . .
 
 **TODO**
@@ -26,7 +24,8 @@ With that in mind. . .
 - [X] Allow user to interact with a todo (using javascript, probably)
 - [X] Sync todo status to EN
 - [X] Allow non-todo related divs to persist through syncs
-- [ ] Allow for multiple notes tagged todo
+- [X] Allow for multiple notes tagged todo
 - [ ] Do all that with Google calander
 - [ ] Finish the microblog tutorial
 - [ ] Move Franklin off of /index
+- [ ] Pretty the damn thing up a bit I suppose

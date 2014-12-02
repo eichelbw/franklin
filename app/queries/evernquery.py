@@ -3,17 +3,6 @@ from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 import evernote.edam.type.ttypes as Types
 from evernote.edam.type.ttypes import NoteSortOrder
 
-##########
-## TODO ##
-##########
-
-# right now there's only one note that holds todos, so there's not real need for
-# a new class. once i get sync working both ways for a singe note, though, it'll
-# make sense to search for multiple notes tagged todo (and likely arrange them
-# in the html by note title). in that case, i'll affix these methods to a class
-# and instantiate an object of this class for each note that's tagged. at least
-# that's how i'm thinking of it now
-
 dev_token = "S=s385:U=3e7d2ff:E=150f8d4c12f:C=149a12394c0:P=1cd:A=en-devtoken:V=2:H=44734894e812cbfe03d83cc365d8c9c5"
 client = EvernoteClient(token=dev_token, sandbox=False)
 note_store = client.get_note_store() # Evernote's Note Store object is the access point to all note-related information
@@ -25,11 +14,8 @@ note_filter.tagGuids = [todo_guid] # find note with todo guid (ie, the todo note
 offset, max_notes = 0, 10
 result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
 result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
-#todo_note_guid = result_list.notes[0].guid
 todo_note_guids = [note.guid for note in result_list.notes]
 
-# TODO increase max_notes and display todos from the same note together. probably change get_todo_notes()
-#      to return a dictionary with keys being note.title and values being en-todos
 
 def get_todo_notes():
     """executes EN api query and returns content of note tagged 'todo'"""
@@ -39,13 +25,13 @@ def get_todo_notes():
     return out_notes
 
 def post_todo_updates(updates):
-    """updates EN api with modifications to the note"""
+    """updates EN api with modifications to the notes"""
     HEADER = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">\n<en-note>'
     TAIL = '</en-note>'
-    for index, tdn in enumerate(get_todo_notes()):
+    for index, tdn in enumerate(get_todo_notes()): # use get_todo_notes bc it's a handy way to get guid and title. probs slow.
         upnote = Types.Note()
         upnote.title, upnote.guid = tdn.title, tdn.guid
-        upnote.content = HEADER + updates[index] + TAIL
+        upnote.content = HEADER + updates[index] + TAIL # updates is a list
         note_store.updateNote(upnote)
 
 ###############
