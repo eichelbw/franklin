@@ -14,9 +14,9 @@ def split_request(curr):
             if curr.name == "h1": # reached the end of the current group o divs
                 return
             elif curr.name == "div": # gets rid of br and None tag names
-                # yield curr.find("div") if curr.find("div") != "None" else curr
-                # yields div children if they exist, otherwise yields div
                 yield curr
+            elif curr == None:
+                del(curr)
         except AttributeError: # end of document
             break
 
@@ -24,10 +24,10 @@ def split_request(curr):
 def format_divs_for_EN(batch):
     """translates tags from frontend style to EN style. housekeeping."""
     update_divs = []
-    print batch
+    batch = unpack_divs(batch)
     for div in batch:
         if div['id'] == 'tdcontent':
-            print "1"
+            # print "1"
             del(div['id'])
             for child in div.children:
                 try:
@@ -37,12 +37,23 @@ def format_divs_for_EN(batch):
                     pass
             update_divs.append(div)
         elif div['id'] == "tdheader":
-            print "2"
+            # print "2"
             del(div['id'])
             update_divs.append(div)
         elif div['id'] == 'nav' or div['id'] == 'tdholder':
-            print "3"
+            # print "3"
             pass
         else:
             print "unexpected div id encountered when reformatting for EN"
-    # print unicode.join(u'\n', map(unicode, update_divs))
+    return unicode.join(u'\n', map(unicode, update_divs))
+
+def unpack_divs(batch):
+    """adds divs contained in divs to the list of divs. ends up duplicating,
+    but hey, let's be thorough here."""
+    for index, div in enumerate(batch):
+        try:
+            if div.find("div").name == "div":
+                batch.insert(index+1, div.find("div"))
+        except:
+            pass
+    return batch

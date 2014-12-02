@@ -42,12 +42,11 @@ def post_todo_updates(updates):
     """updates EN api with modifications to the note"""
     HEADER = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">\n<en-note>'
     TAIL = '</en-note>'
-    notes = get_todo_notes()
-    # for tdn in get_todo_notes():
-    #     upnote = Types.Note()
-    #     upnote.title, upnote.guid = tdn.title, tdn.guid
-    #     upnote.content = HEADER + updates + TAIL
-    #     note_store.updateNote(upnote)
+    for index, tdn in enumerate(get_todo_notes()):
+        upnote = Types.Note()
+        upnote.title, upnote.guid = tdn.title, tdn.guid
+        upnote.content = HEADER + updates[index] + TAIL
+        note_store.updateNote(upnote)
 
 ###############
 ### TESTING ###

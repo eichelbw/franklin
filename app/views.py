@@ -76,34 +76,15 @@ def todos():
 
 @app.route('/sync', methods=['POST'])
 def sync():
-    """finds all en-todos on the page"""
+    """gets the request from the front end, does a bunch of housekeeping,
+    and then sends a list with each update along to the EN interface"""
     req = BeautifulSoup(request.get_data().decode("string-escape"))
+    updates = []
     for tag in req:
         if tag.name == "h1":
-            current = tag
-            update_batch = list(view.split_request(current))
-            view.format_divs_for_EN(update_batch)
-    # all_divs = req.findAll("div")
-    # update_divs = []
-    # for div in all_divs:
-    #     if div['id'] == 'tdcontent':
-    #         del(div['id'])
-    #         for child in div.children:
-    #             try:
-    #                 if child["checked"] == "checked":
-    #                     child["checked"] = "true"
-    #             except:
-    #                 pass
-    #         update_divs.append(div)
-    #     elif div['id'] == "tdheader":
-    #         del(div['id'])
-    #         update_divs.append(div)
-    #     elif div['id'] == 'nav' or div['id'] == 'tdholder':
-    #         pass
-    #     else:
-    #         print "something's gone wrong in the sync route"
-    # updates = unicode.join(u'\n', map(unicode, update_divs))
-    # evernquery.post_todo_updates(updates)
+            update_batch = list(view.split_request(tag)) # look in view helper
+            updates.append(view.format_divs_for_EN(update_batch))
+    evernquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 
 @app.before_request
