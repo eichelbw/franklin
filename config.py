@@ -12,3 +12,6 @@ OPENID_PROVIDERS = [{'name' : 'Google', 'url' : 'https://www.google.com/accounts
         {'name': 'AOL', 'url': 'http://openid.aol.com/<username>'},
         {'name': 'Flickr', 'url': 'http://www.flickr.com/<username>'},
         {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'}]
+
+EN_CONSUMER_KEY = "wceichelb"
+EN_CONSUMER_SECRET = "138c9476921ba9e5"
