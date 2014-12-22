@@ -33,7 +33,7 @@
   <body>
     <div id='nav'>
       Franklin:
-      <a href="{{ url_for('auth') }}">EN Auth</a>
+      <a href="{{ url_for('auth_start') }}">EN Auth</a>
       |<a href="{{ url_for('index') }}">Home </a>
       | <a href="{{ url_for('todos') }}">Todos</a>
       {% if g.user.is_authenticated() %}
