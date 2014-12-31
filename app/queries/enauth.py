@@ -1,9 +1,10 @@
+import oauth2 as oauth
 import config
 
 # all this from https://github.com/dasevilla/evernote-oauth-example
 def get_oauth_client(token=None):
     """Return an instance of the OAuth client."""
-    consumer = oauth.Consumer(EN_CONSUMER_KEY, EN_CONSUMER_SECRET)
+    consumer = oauth.Consumer(config.EN_CONSUMER_KEY, config.EN_CONSUMER_SECRET)
     if token:
         client = oauth.Client(consumer, token)
     else:

@@ -12,7 +12,6 @@ from helpers import view
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
     """index route"""
     # user = g.user
