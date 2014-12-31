@@ -1,5 +1,5 @@
 import oauth2 as oauth
-import config
+import app.config as config
 
 # all this from https://github.com/dasevilla/evernote-oauth-example
 def get_oauth_client(token=None):

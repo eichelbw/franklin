@@ -3,18 +3,18 @@ from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 import evernote.edam.type.ttypes as Types
 from evernote.edam.type.ttypes import NoteSortOrder
 
-dev_token = "S=s385:U=3e7d2ff:E=150f8d4c12f:C=149a12394c0:P=1cd:A=en-devtoken:V=2:H=44734894e812cbfe03d83cc365d8c9c5"
-client = EvernoteClient(token=dev_token, sandbox=False)
-note_store = client.get_note_store() # Evernote's Note Store object is the access point to all note-related information
-all_tags = note_store.listTags()
-todo_guid = [tag for tag in all_tags if tag.name == "todo"][0].guid # compare all tags to "todo" and grab guid
-
-note_filter = NoteFilter() # the notefilter object allows us to define filters for our eventual findNotesMetadata call
-note_filter.tagGuids = [todo_guid] # find note with todo guid (ie, the todo note)
-offset, max_notes = 0, 10
-result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
-result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
-todo_note_guids = [note.guid for note in result_list.notes]
+# dev_token = "S=s385:U=3e7d2ff:E=150f8d4c12f:C=149a12394c0:P=1cd:A=en-devtoken:V=2:H=44734894e812cbfe03d83cc365d8c9c5"
+# client = EvernoteClient(token=dev_token, sandbox=False)
+# note_store = client.get_note_store() # Evernote's Note Store object is the access point to all note-related information
+# all_tags = note_store.listTags()
+# todo_guid = [tag for tag in all_tags if tag.name == "todo"][0].guid # compare all tags to "todo" and grab guid
+#
+# note_filter = NoteFilter() # the notefilter object allows us to define filters for our eventual findNotesMetadata call
+# note_filter.tagGuids = [todo_guid] # find note with todo guid (ie, the todo note)
+# offset, max_notes = 0, 10
+# result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
+# result_list = note_store.findNotesMetadata(dev_token, note_filter, offset, max_notes, result_spec)
+# todo_note_guids = [note.guid for note in result_list.notes]
 
 
 def get_todo_notes():
