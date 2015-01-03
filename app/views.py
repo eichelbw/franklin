@@ -9,7 +9,7 @@ import app.queries.evernquery as evernquery
 import app.queries.enauth as enauth
 import app.config as config
 from bs4 import BeautifulSoup
-from forms import LoginForm
+import oauth2 as oauth
 from models import User
 from datetime import datetime
 from helpers import view
@@ -96,7 +96,7 @@ def auth_start():
     session['oauth_token_secret'] = request_token['oauth_token_secret']
 
     # Redirect the user to the Evernote authorization URL
-    return redirect('%s?oauth_token=%s' % (EN_AUTHORIZE_URL,
+    return redirect('%s?oauth_token=%s' % (config.EN_AUTHORIZE_URL,
         urllib.quote(session['oauth_token'])))
 
 
@@ -114,9 +114,12 @@ def auth_finish():
     client = enauth.get_oauth_client(token)
 
     # Retrieve the token credentials (Access Token) from Evernote
-    resp, content = client.request(EN_ACCESS_TOKEN_URL, 'POST')
+    resp, content = client.request(config.EN_ACCESS_TOKEN_URL, 'POST')
 
-    if resp['status'] != '200':
+    if resp['status'] == '401':
+        flash("Sorry, looks like you declined authorization :(")
+        return redirect(url_for('index'))
+    elif resp['status'] != '200':
         raise Exception('Invalid response %s.' % resp['status'])
 
     access_token = dict(urlparse.parse_qsl(content))
@@ -129,8 +132,8 @@ def auth_finish():
     session['shardId'] = user.shardId
     session['identifier'] = authToken
 
-    return "<ul><li>oauth_token = %s</li><li>shardId = %s</li></ul>" % (
-        authToken, user.shardId)
+    flash('Successfully logged in!')
+    return redirect(url_for('index'))
 
 @app.route('/todos')
 def todos():
