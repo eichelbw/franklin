@@ -3,7 +3,6 @@ from evernote.edam.notestore.ttypes import NoteFilter, NotesMetadataResultSpec
 import evernote.edam.type.ttypes as Types
 from evernote.edam.type.ttypes import NoteSortOrder
 
-# dev_token = "S=s385:U=3e7d2ff:E=150f8d4c12f:C=149a12394c0:P=1cd:A=en-devtoken:V=2:H=44734894e812cbfe03d83cc365d8c9c5"
 # client = EvernoteClient(token=dev_token, sandbox=False)
 # note_store = client.get_note_store() # Evernote's Note Store object is the access point to all note-related information
 # all_tags = note_store.listTags()

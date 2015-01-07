@@ -2,17 +2,17 @@
 
 {% block content %}
 <script type="text/javascript">
-function set_openid(openid, pr)
-{
-  u = openid.search('<username>')
-  if (u != -1) {
-    // openid requires username
-    user = prompt('Enter your ' + pr + ' username:')
-    openid = openid.supstr(0, u) + user
+  function set_openid(openid, pr)
+  {
+    u = openid.search('<username>')
+    if (u != -1) {
+      // openid requires username
+      user = prompt('Enter your ' + pr + ' username:')
+      openid = openid.supstr(0, u) + user
+    }
+    form = document.forms['login']
+    form.elements['openid'].value = openid
   }
-  form = document.forms['login']
-  form.elements['openid'].value = openid
-}
 </script>
   <h1>Sign In</h1>
   <form action="" method="post" name="login">

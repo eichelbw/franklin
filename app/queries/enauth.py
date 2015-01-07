@@ -1,5 +1,5 @@
 import oauth2 as oauth
-import app.config as config
+import config
 import thrift.protocol.TBinaryProtocol as TBinaryProtocol
 import thrift.transport.THttpClient as THttpClient
 import evernote.edam.userstore.UserStore as UserStore

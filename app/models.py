@@ -1,15 +1,11 @@
 from hashlib import md5
+from app import db
 import app.queries.evernquery as evernquery
 from bs4 import BeautifulSoup
 
-# class User(db.Model):
-class User():
-    # id = db.Column(db.Integer, primary_key=True)
-    # nickname = db.Column(db.String(64), index=True, unique=True)
-    # email = db.Column(db.String(120), index=True, unique=True)
-    # posts = db.relationship('Post', backref='author', lazy='dynamic')
-    # about_me = db.Column(db.String(140))
-    # last_seen = db.Column(db.DateTime)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), index=True, unique=True)
 
     def is_authenticated(self):
         """returns false if user is not allowed to authenticate"""
@@ -70,7 +66,7 @@ class User():
 
     def __repr__(self):
         """how to print items from the db. used for debugging"""
-        return "<User %r>" % (self.nickname)
+        return "<User %r>" % (self.id)
 
 # class Post(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
