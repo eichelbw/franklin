@@ -12,8 +12,8 @@ GOOGLE_OPENID = [
         {'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id'},
         ]
 
-EN_CONSUMER_KEY = 'wceichelb-7095'
-EN_CONSUMER_SECRET = 'abd6150a03c16fb9'
+EN_CONSUMER_KEY = 'wceichelb-6766'
+EN_CONSUMER_SECRET = '381adfd541c539c7'
 
 EN_REQUEST_TOKEN_URL = 'https://sandbox.evernote.com/oauth'
 EN_ACCESS_TOKEN_URL = 'https://sandbox.evernote.com/oauth'

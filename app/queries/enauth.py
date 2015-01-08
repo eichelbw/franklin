@@ -16,7 +16,7 @@ def get_oauth_client(token=None):
     return client
 
 
-def get_notestore():
+def get_notestore(session):
     """Return an instance of the Evernote NoteStore. Assumes that 'shardId' is
     stored in the current session."""
     shardId = session['shardId']

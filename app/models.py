@@ -26,11 +26,11 @@ class User(db.Model):
         """grabs the user's gravatar"""
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
-    def get_todo_content(self):
+    def get_todo_content(self, session):
         """call queries/evernquery.get_todo_notes. return a list of all divs
         that contain en-todo tags along with their 'checked' status. seperate
         text not associated with en-todo tags and pass that along as well."""
-        query_response = evernquery.get_todo_notes()
+        query_response = evernquery.get_todo_notes(session)
         out_divs = dict()
         for note in query_response:
             out_divs[str(note.title)] = self.munge_note(note)

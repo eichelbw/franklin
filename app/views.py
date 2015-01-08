@@ -4,7 +4,7 @@ import urllib
 from flask import render_template, flash, redirect, session, url_for, request, g, jsonify
 from flask.ext.login import login_user, logout_user, current_user, login_required
 import json
-from app import app, oid, lm
+from app import app, oid, lm, db
 from .forms import LoginForm
 import app.queries.evernquery as evernquery
 import app.queries.enauth as enauth
@@ -20,16 +20,6 @@ from helpers import view
 def index():
     """index route"""
     user = g.user
-    # posts = [  # fake array of posts
-    #     {
-    #         'author': {'nickname': 'John'},
-    #         'body': 'Beautiful day in Portland!'
-    #     },
-    #     {
-    #         'author': {'nickname': 'Susan'},
-    #         'body': 'The Avengers movie was so cool!'
-    #     }
-    # ]
     return render_template('index.html',
             title = 'Home',
             )
@@ -53,22 +43,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
-# @app.route('/user/<nickname>')
-# @login_required
-# def user(nickname):
-#     """returns profile page for user"""
-#     user = User.query.filter_by(nickname=nickname).first()
-#     if user == None:
-#         flash('User %s not found.' % nickname)
-#         return redirect(url_for('index'))
-#     posts = [
-#             {'author': user, 'body': 'Test post 1'},
-#             {'author': user, 'body': 'Test post 2'}
-#             ]
-#     return render_template('user.html',
-#             user=user,
-#             posts=posts)
 
 # this and the following method lifted unflinchingly from
 # https://github.com/dasevilla/evernote-oauth-example
@@ -102,7 +76,6 @@ def auth_start():
     return redirect('%s?oauth_token=%s' % (config.EN_AUTHORIZE_URL,
         urllib.quote(session['oauth_token'])))
 
-
 @app.route('/authComplete')
 @login_required
 def auth_finish():
@@ -135,10 +108,10 @@ def auth_finish():
     # Save the users information to so we can make requests later
     session['shardId'] = user.shardId
     session['identifier'] = authToken
+    print session['identifier']
 
     # print "%s - authenticated user. got authToken: %s and shardId: %s" % \
     #         (datetime.now, authToken, user.shardId)
-    print type(user)
 
     flash('Successfully logged in!')
     return redirect(url_for('todos'))
@@ -169,8 +142,8 @@ def before_request():
     g.user = current_user
     if g.user.is_authenticated():
         g.user.last_seen = datetime.utcnow()
-        # db.session.add(g.user)
-        # db.session.commit()
+        db.session.add(g.user)
+        db.session.commit()
 
 @lm.user_loader
 def load_user(id):
