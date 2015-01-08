@@ -25,6 +25,7 @@ With that in mind. . .
 - [X] Sync todo status to EN
 - [X] Allow non-todo related divs to persist through syncs
 - [X] Allow for multiple notes tagged todo
+- [X] Get EN functionality working through oAuth
 - [ ] Do all that with Google calander
 - [ ] Finish the microblog tutorial
 - [ ] Move Franklin off of /index

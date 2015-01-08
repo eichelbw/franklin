@@ -20,7 +20,6 @@ def get_todo_note_guids(session):
     offset, max_notes = 0, 10
     result_spec = NotesMetadataResultSpec(includeTitle=True) # allows us to request specific info be returned about the note
     result_list = note_store.findNotesMetadata(auth_token, note_filter, offset, max_notes, result_spec)
-    print note_store.findNotesMetadata(auth_token, note_filter, offset, max_notes, result_spec)
     return note_store, [note.guid for note in result_list.notes]
 
 
@@ -30,28 +29,15 @@ def get_todo_notes(session):
     note_store, guids = get_todo_note_guids(session)
     for guid in guids:
         out_notes.append(note_store.getNote(session['identifier'], str(guid), True, False, False, False))
-    return out_notes
+    return note_store, out_notes
 
 def post_todo_updates(updates):
     """updates EN api with modifications to the notes"""
     HEADER = '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">\n<en-note>'
     TAIL = '</en-note>'
-    for index, tdn in enumerate(get_todo_notes()): # use get_todo_notes bc it's a handy way to get guid and title. probs slow.
+    note_store, notes = get_todo_notes(session)
+    for index, tdn in enumerate(notes): # use get_todo_notes bc it's a handy way to get guid and title. probs slow.
         upnote = Types.Note()
         upnote.title, upnote.guid = tdn.title, tdn.guid
         upnote.content = HEADER + updates[index] + TAIL # updates is a list
-        note_store.updateNote(upnote)
-
-###############
-### TESTING ###
-###############
-
-#note = Types.Note()
-#note.title = "test note"
-#note.content = '<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd"><en-note>Hello world!</en-note>'
-#note = noteStore.createNote(note)
-
-#userStore = client.get_user_store()
-#user = userStore.getUser()
-#print user.username
-
+        note_store.updateNote(session['identifier'], upnote)
