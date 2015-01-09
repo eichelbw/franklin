@@ -20,10 +20,10 @@
         });
       $(function() {
           // grabs div containing all divs with en-todo's, which will get picked out in the view
-            $("input#syncbutton").on('click', function() {
+            $("input#ensyncbutton").on('click', function() {
               var updates = $(this).parents().html();
               $.ajax({ type: "POST",
-                       url: "/sync",
+                       url: "/ensync",
                        data: JSON.stringify(updates)
               });
             })

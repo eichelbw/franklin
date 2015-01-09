@@ -1,6 +1,6 @@
 from hashlib import md5
 from app import db
-import app.queries.evernquery as evernquery
+import app.queries.enquery as enquery
 from bs4 import BeautifulSoup
 
 class User(db.Model):
@@ -27,10 +27,10 @@ class User(db.Model):
         return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def get_todo_content(self, session):
-        """call queries/evernquery.get_todo_notes. return a list of all divs
+        """call queries/enquery.get_todo_notes. return a list of all divs
         that contain en-todo tags along with their 'checked' status. seperate
         text not associated with en-todo tags and pass that along as well."""
-        query_response = evernquery.get_todo_notes(session)
+        query_response = enquery.get_todo_notes(session)[1]
         out_divs = dict()
         for note in query_response:
             out_divs[str(note.title)] = self.munge_note(note)
@@ -40,6 +40,7 @@ class User(db.Model):
         """takes a note and return a list of all divs that contain en-todo tags
         along w their 'checked' status. separate text not associated w en-todo
         tags and pass that as long as well."""
+        print note
         soup = BeautifulSoup(note.content)
         todo_title = note.title
         all_divs = soup.findAll("div")

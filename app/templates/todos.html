@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+<style type='text/css'>
+  div#tdholder{
+    display:inline;
+  }
+  input#todocheckbox,div#tdcontent{
+    vertical-align:middle;
+    color:red;
+  }
+</style>
 {% block content %}
   <div>
     {% for header, todo in user.get_todo_content(session).iteritems() %}
@@ -7,14 +16,17 @@
       {% for div in todo %}
         {% if div[0]["id"] == "tdcontent" %}
           <div id="tdholder">
-            <input type="checkbox" id="todocheckbox" {{ 'checked' if div[1] }}/>: {{ div[0]|safe }}
+            {% autoescape false %}
+            <input type="checkbox" id="todocheckbox" {{ 'checked' if div[1] }}/> {{ div[0] }}
+            {% endautoescape %}
           </div>
         {% else %}
           {{ div[0]|safe }}
         {% endif %}
       {% endfor %}
+      <p><input type=submit value=+>
     {% endfor %}
     <br/>
-    <input type="button" id="syncbutton">Sync
+    <input type="button" id="ensyncbutton">Sync
   </div>
 {% endblock %}

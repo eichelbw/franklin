@@ -9,6 +9,7 @@ def get_todo_note_guids(session):
     # Evernote's Note Store object is the access point to all note-related
     # information
     auth_token = session['identifier']
+    print auth_token
 
     note_store = enauth.get_notestore(session)
 

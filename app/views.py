@@ -6,7 +6,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 import json
 from app import app, oid, lm, db
 from .forms import LoginForm
-import app.queries.evernquery as evernquery
+import app.queries.enquery as enquery
 import app.queries.enauth as enauth
 import config
 from bs4 import BeautifulSoup
@@ -43,6 +43,20 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route('/todos')
+def todos():
+    user = g.user
+    return render_template('todos.html',
+            title="TODO",
+            user=user
+            )
+
+################################################################################
+##
+##  ^^^^^ basic routes. vvvvv authentication routes
+##
+################################################################################
 
 # this and the following method lifted unflinchingly from
 # https://github.com/dasevilla/evernote-oauth-example
@@ -110,22 +124,17 @@ def auth_finish():
     session['identifier'] = authToken
     print session['identifier']
 
-    # print "%s - authenticated user. got authToken: %s and shardId: %s" % \
-    #         (datetime.now, authToken, user.shardId)
-
     flash('Successfully logged in!')
     return redirect(url_for('todos'))
 
-@app.route('/todos')
-def todos():
-    user = g.user
-    return render_template('todos.html',
-            title="TODO",
-            user=user
-            )
+################################################################################
+##
+##  ^^^^^ authentication routes. vvvvv upd8/edit routes
+##
+################################################################################
 
-@app.route('/sync', methods=['POST'])
-def sync():
+@app.route('/ensync', methods=['POST'])
+def ensync():
     """gets the request from the front end, does a bunch of housekeeping,
     and then sends a list with each update along to the EN interface"""
     req = BeautifulSoup(request.get_data().decode("string-escape"))
@@ -134,8 +143,19 @@ def sync():
         if tag.name == "h1":
             update_batch = list(view.split_request(tag)) # look in view helper
             updates.append(view.format_divs_for_EN(update_batch))
-    evernquery.post_todo_updates(updates)
+    enquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
+
+@app.route('/enedit', methods=['POST'])
+def enedit():
+    form = EditForm(request.form)
+    return render_template('enedit.html', form=form)
+
+################################################################################
+##
+##  ^^^^^ upd8/edit routes
+##
+################################################################################
 
 @app.before_request
 def before_request():

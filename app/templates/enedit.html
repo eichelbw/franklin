@@ -1,0 +1,6 @@
+{% from "_formhelpers.html" import render_field %}
+<form action="/enedit" method="post">
+  <dl>
+    {{ render_template(form.content) }}
+  </dl>
+</form>
