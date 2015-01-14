@@ -40,7 +40,6 @@ class User(db.Model):
         """takes a note and return a list of all divs that contain en-todo tags
         along w their 'checked' status. separate text not associated w en-todo
         tags and pass that as long as well."""
-        print note
         soup = BeautifulSoup(note.content)
         todo_title = note.title
         all_divs = soup.findAll("div")

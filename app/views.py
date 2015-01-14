@@ -5,7 +5,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 import json
 from app import app, oid, lm, db
-from .forms import LoginForm
+from .forms import LoginForm, ENEditForm
 import app.queries.enquery as enquery
 import app.queries.enauth as enauth
 import config
@@ -122,7 +122,6 @@ def auth_finish():
     # Save the users information to so we can make requests later
     session['shardId'] = user.shardId
     session['identifier'] = authToken
-    print session['identifier']
 
     flash('Successfully logged in!')
     return redirect(url_for('todos'))
@@ -146,9 +145,9 @@ def ensync():
     enquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 
-@app.route('/enedit', methods=['POST'])
+@app.route('/enedit', methods=['GET','POST'])
 def enedit():
-    form = EditForm(request.form)
+    form = ENEditForm(request.form)
     return render_template('enedit.html', form=form)
 
 ################################################################################

@@ -1,6 +1,6 @@
-{% from "_formhelpers.html" import render_field %}
+{% from "_formhelper.html" import render_field %}
 <form action="/enedit" method="post">
   <dl>
-    {{ render_template(form.content) }}
+    {{ render_field(form.content) }}
   </dl>
 </form>

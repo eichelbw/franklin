@@ -7,4 +7,4 @@ class LoginForm(Form):
     remember_me = BooleanField('remember_me', default=False)
 
 class ENEditForm(Form):
-    content = TextField('content')
+    content = TextField('New Task')

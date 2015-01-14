@@ -1,4 +1,4 @@
-franklin is an explorative todo application (a la [TodoMVC](todomvc.com)) (slash way for me to learn Flask) that pulls tasks from the [Evernote](https://dev.evernote.com/doc/start/python.php) and [Google Calendar](https://developers.google.com/google-apps/calendar/firstapp) APIs.
+franklin is an exploratory todo application (a la [TodoMVC](todomvc.com)) (slash way for me to learn Flask) that pulls tasks from the [Evernote](https://dev.evernote.com/doc/start/python.php) and [Google Calendar](https://developers.google.com/google-apps/calendar/firstapp) APIs.
 
 --WIP--
 
@@ -19,6 +19,4 @@ With that in mind. . .
 - [X] Allow for multiple notes tagged todo
 - [X] Get EN functionality working through oAuth
 - [ ] Do all that with Google calander
-- [ ] Finish the microblog tutorial
-- [ ] Move Franklin off of /index
 - [ ] Pretty the damn thing up a bit I suppose
