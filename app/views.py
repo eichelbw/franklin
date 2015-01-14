@@ -5,7 +5,7 @@ from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 import json
 from app import app, oid, lm, db
-from .forms import LoginForm, ENEditForm
+from .forms import LoginForm, ENCreateForm
 import app.queries.enquery as enquery
 import app.queries.enauth as enauth
 import config
@@ -145,10 +145,14 @@ def ensync():
     enquery.post_todo_updates(updates)
     return jsonify(result={"status": 200})
 
-@app.route('/enedit', methods=['GET','POST'])
-def enedit():
-    form = ENEditForm(request.form)
-    return render_template('enedit.html', form=form)
+@app.route('/encreate', methods=['GET','POST'])
+def encreate():
+    if request.method == "GET":
+        form = ENCreateForm(request.form)
+        return render_template('encreate.html', form=form)
+    elif request.method == "POST":
+        print type(request.data)
+        return redirect(url_for('todos'))
 
 ################################################################################
 ##

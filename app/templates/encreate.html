@@ -1,6 +1,7 @@
 {% from "_formhelper.html" import render_field %}
-<form action="/enedit" method="post">
+<form action="/encreate" method=post>
   <dl>
     {{ render_field(form.content) }}
   </dl>
+  <input type="submit" value="Create!"/>
 </form>
