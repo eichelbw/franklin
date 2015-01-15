@@ -8,7 +8,7 @@ import app.queries.enauth as enauth
 def get_todo_note_guids(session):
     # Evernote's Note Store object is the access point to all note-related
     # information
-    auth_token = session['identifier']
+    auth_token = session['en_identifier']
 
     note_store = enauth.get_notestore(session)
 
@@ -28,7 +28,7 @@ def get_todo_notes(session):
     out_notes = []
     note_store, guids = get_todo_note_guids(session)
     for guid in guids:
-        out_notes.append(note_store.getNote(session['identifier'], str(guid), True, False, False, False))
+        out_notes.append(note_store.getNote(session['en_identifier'], str(guid), True, False, False, False))
     return note_store, out_notes
 
 def post_todo_updates(updates):
@@ -40,4 +40,4 @@ def post_todo_updates(updates):
         upnote = Types.Note()
         upnote.title, upnote.guid = tdn.title, tdn.guid
         upnote.content = HEADER + updates[index] + TAIL # updates is a list
-        note_store.updateNote(session['identifier'], upnote)
+        note_store.updateNote(session['en_identifier'], upnote)

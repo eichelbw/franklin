@@ -83,12 +83,12 @@ def auth_start():
     request_token = dict(urlparse.parse_qsl(content))
 
     # Save the request token information for later
-    session['oauth_token'] = request_token['oauth_token']
-    session['oauth_token_secret'] = request_token['oauth_token_secret']
+    session['en_oauth_token'] = request_token['oauth_token']
+    session['en_oauth_token_secret'] = request_token['oauth_token_secret']
 
     # Redirect the user to the Evernote authorization URL
     return redirect('%s?oauth_token=%s' % (config.EN_AUTHORIZE_URL,
-        urllib.quote(session['oauth_token'])))
+        urllib.quote(session['en_oauth_token'])))
 
 @app.route('/authComplete')
 @login_required
@@ -98,7 +98,7 @@ def auth_finish():
 
     oauth_verifier = request.args.get('oauth_verifier', '')
 
-    token = oauth.Token(session['oauth_token'], session['oauth_token_secret'])
+    token = oauth.Token(session['en_oauth_token'], session['en_oauth_token_secret'])
     token.set_verifier(oauth_verifier)
 
     client = enauth.get_oauth_client()
@@ -120,8 +120,8 @@ def auth_finish():
     user = userStore.getUser(authToken)
 
     # Save the users information to so we can make requests later
-    session['shardId'] = user.shardId
-    session['identifier'] = authToken
+    session['en_shardId'] = user.shardId
+    session['en_identifier'] = authToken
 
     flash('Successfully logged in!')
     return redirect(url_for('todos'))
@@ -148,8 +148,9 @@ def ensync():
 @app.route('/encreate', methods=['GET','POST'])
 def encreate():
     if request.method == "GET":
-        form = ENCreateForm(request.form)
-        return render_template('encreate.html', form=form)
+        # form = ENCreateForm(request.form)
+        # return render_template('encreate.html', form=form)
+        return render_template('encreate.html')
     elif request.method == "POST":
         print type(request.data)
         return redirect(url_for('todos'))

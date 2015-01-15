@@ -1,14 +1,5 @@
 {% extends "base.html" %}
 
-<style type='text/css'>
-  div#tdholder{
-    display:inline;
-  }
-  input#todocheckbox,div#tdcontent{
-    vertical-align:middle;
-    color:red;
-  }
-</style>
 {% block content %}
   <div>
     {% for header, todo in user.get_todo_content(session).iteritems() %}
@@ -26,7 +17,7 @@
           {{ div[0]|safe }}
         {% endif %}
       {% endfor %}
-      <form action='/encreate'>
+      <form action={{ url_for('encreate', todo=todo) }}>
         <p><input class='btn btn-default' type=submit value=+>
       </form>
     {% endfor %}
