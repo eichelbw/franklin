@@ -15,20 +15,22 @@
       <h1 id="todoheader">{{ header|safe }}</h1>
       {% for div in todo %}
         {% if div[0]["id"] == "tdcontent" %}
-          <div id="tdholder">
-            {% autoescape false %}
-            <input type="checkbox" id="todocheckbox" {{ 'checked' if div[1] }}/> {{ div[0] }}
-            {% endautoescape %}
+          <div class="checkbox">
+            <div id="tdholder">
+              <label>
+                <input type="checkbox" id="todocheckbox" {{ 'checked' if div[1] }}/> {{ div[0]|safe }}
+              </label>
+            </div>
           </div>
         {% else %}
           {{ div[0]|safe }}
         {% endif %}
       {% endfor %}
       <form action='/encreate'>
-        <p><input type=submit value=+>
+        <p><input class='btn btn-default' type=submit value=+>
       </form>
     {% endfor %}
     <br/>
-    <input type="button" id="ensyncbutton" value=Sync>
+    <input class='btn btn-primary' type="button" id="ensyncbutton" value=Sync>
   </div>
 {% endblock %}
