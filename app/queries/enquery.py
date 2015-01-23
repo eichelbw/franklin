@@ -25,11 +25,12 @@ def get_todo_note_guids(session):
 
 def get_todo_notes(session):
     """executes EN api query and returns content of note tagged 'todo'"""
-    out_notes = []
+    en_notes = []
     note_store, guids = get_todo_note_guids(session)
+    session['en_notes'] = dict()
     for guid in guids:
-        out_notes.append(note_store.getNote(session['en_identifier'], str(guid), True, False, False, False))
-    return note_store, out_notes
+        en_notes.append(note_store.getNote(session['en_identifier'], str(guid), True, False, False, False))
+    return note_store, en_notes
 
 def post_todo_updates(updates):
     """updates EN api with modifications to the notes"""

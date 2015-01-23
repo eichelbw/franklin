@@ -17,7 +17,7 @@
           {{ div[0]|safe }}
         {% endif %}
       {% endfor %}
-      <form action={{ url_for('encreate', todo=todo) }}>
+      <form action={{ url_for('encreate') }}>
         <p><input class='btn btn-default' type=submit value=+>
       </form>
     {% endfor %}
